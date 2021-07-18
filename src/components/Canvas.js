@@ -11,16 +11,6 @@ function Canvas() {
     canvas.height = window.innerHeight;
     const ctx = canvas.getContext("2d");
     const g = 980;
-    
-    canvas.addEventListener('click', (e) => {
-      const pos = {
-        x: e.clientX,
-        y: e.clientY
-      };
-
-      console.log(pos);
-      
-    });  
 
     var ball = new Ball(canvas.width/2, 0, 70, 'blue', 0.555);
     
@@ -28,6 +18,23 @@ function Canvas() {
     animate();
     
     contextRef.current = ctx;
+
+    var MouseTouchTracker = function(canvas, callback) {
+      
+      function processEvent(event) {
+        var elem = canvas.getBoundingClientRect();
+        var topOffset = elem.top;
+        var leftOffset = elem.left;
+  
+        if (event.touches) {
+          return {
+            x: event.touches[0].clientX - leftOffset,
+            y: event.touches[0].clientY - topOffset
+          }
+        }
+      }
+
+    };
     
     function Ball(x, y, radius, color, elasticity) {
       this.x = x;
